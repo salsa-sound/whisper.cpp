@@ -7558,6 +7558,11 @@ int whisper_full_with_state(
             if (it != (int) temperatures.size() - 1) {
                 const auto & decoder = state->decoders[best_decoder_id];
 
+                if (decoder.failed) {
+                    WHISPER_LOG_DEBUG("%s: early return - skipping further processing for failed segment\n", __func__);
+                    break;
+                }
+
                 if (decoder.failed ||
                     (decoder.sequence.avg_logprobs < params.logprob_thold && state->no_speech_prob < params.no_speech_thold)) {
                     WHISPER_LOG_DEBUG("%s: failed due to avg_logprobs %8.5f < %8.5f and no_speech_prob %8.5f < %8.5f\n", __func__, decoder.sequence.avg_logprobs, params.logprob_thold, state->no_speech_prob, params.no_speech_thold);

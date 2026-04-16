@@ -7571,12 +7571,6 @@ int whisper_full_with_state(
                 }
             }
 
-                        // EARLY RETURN: If the best decoder failed, break out of the main loop to skip further processing for this segment
-            if (decoder.failed) {
-                WHISPER_LOG_DEBUG("%s: early return - skipping further processing for failed segment\n", __func__);
-                break;
-            }
-
             if (success) {
                 //for (auto & token : ctx->decoders[best_decoder_id].sequence.tokens) {
                 //    WHISPER_LOG_DEBUG("%s: token = %d, p = %6.3f, pt = %6.3f, ts = %s, str = %s\n", __func__, token.id, token.p, token.pt, ctx->vocab.id_to_token.at(token.tid).c_str(), ctx->vocab.id_to_token.at(token.id).c_str());
